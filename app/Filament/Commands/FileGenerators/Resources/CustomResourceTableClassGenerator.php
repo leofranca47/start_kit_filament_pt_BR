@@ -120,40 +120,40 @@ class CustomResourceTableClassGenerator extends ResourceTableClassGenerator
                 }
 
                 if (in_array($type['name'], [
-                        'integer',
-                        'decimal',
-                        'float',
-                        'double',
-                        'money',
-                    ]) && blank($guessedRelationshipName)) {
+                    'integer',
+                    'decimal',
+                    'float',
+                    'double',
+                    'money',
+                ]) && blank($guessedRelationshipName)) {
                     $columnData[(in_array($columnName, [
-                            'cost',
-                            'money',
-                            'price',
-                        ]) || str($columnName)->endsWith([
-                            '_cost',
-                            '_price',
-                        ]) || $type['name'] === 'money') ? 'money' : 'numeric'] = [];
+                        'cost',
+                        'money',
+                        'price',
+                    ]) || str($columnName)->endsWith([
+                        '_cost',
+                        '_price',
+                    ]) || $type['name'] === 'money') ? 'money' : 'numeric'] = [];
                 }
 
                 if ((in_array($type['name'], [
-                            'string',
-                            'char',
-                        ]) && ($columnData['type'] === TextColumn::class)) || filled($guessedRelationshipName)) {
+                    'string',
+                    'char',
+                ]) && ($columnData['type'] === TextColumn::class)) || filled($guessedRelationshipName)) {
                     $columnData['searchable'] = [];
                 }
 
                 if (in_array($type['name'], [
-                        'date',
-                        'time',
-                        'datetime',
-                        'timestamp',
-                        'integer',
-                        'decimal',
-                        'float',
-                        'double',
-                        'money',
-                    ]) && blank($guessedRelationshipName)) {
+                    'date',
+                    'time',
+                    'datetime',
+                    'timestamp',
+                    'integer',
+                    'decimal',
+                    'float',
+                    'double',
+                    'money',
+                ]) && blank($guessedRelationshipName)) {
                     $columnData['sortable'] = [];
                 }
             }
@@ -166,7 +166,7 @@ class CustomResourceTableClassGenerator extends ResourceTableClassGenerator
                 $columnData['toggleable'] = ['isToggledHiddenByDefault' => true];
             }
 
-            //metodo para adicionar as labels dos campos traduzidas
+            // metodo para adicionar as labels dos campos traduzidas
             $columnData['label'] = $this->transformerVariableNameInText($columnName);
 
             $this->importUnlessPartial($columnData['type']);
@@ -181,7 +181,7 @@ class CustomResourceTableClassGenerator extends ResourceTableClassGenerator
                 unset($columnData['type']);
 
                 foreach ($columnData as $methodName => $parameters) {
-                    $column .= new Literal(PHP_EOL . "            ->{$methodName}(...?:)", [$parameters]);
+                    $column .= new Literal(PHP_EOL."            ->{$methodName}(...?:)", [$parameters]);
                 }
 
                 return "{$column},";

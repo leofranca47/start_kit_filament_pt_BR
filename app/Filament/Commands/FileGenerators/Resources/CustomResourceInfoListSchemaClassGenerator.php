@@ -16,7 +16,7 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
 
     public function getInfolistComponents(?string $model = null, array $exceptColumns = []): array
     {
-        if (!$this->isGenerated()) {
+        if (! $this->isGenerated()) {
             return [];
         }
 
@@ -24,7 +24,7 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
             return [];
         }
 
-        if (!class_exists($model)) {
+        if (! class_exists($model)) {
             return [];
         }
 
@@ -78,7 +78,7 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
                     $componentName = "{$guessedRelationshipName}.{$guessedRelationshipTitleColumnName}";
 
                     $componentData['label'] = [
-                        (string)str($guessedRelationshipName)->kebab()->replace(['-', '_'], ' ')->ucfirst()
+                        (string) str($guessedRelationshipName)->kebab()->replace(['-', '_'], ' ')->ucfirst(),
                     ];
                 }
             } else {
@@ -128,20 +128,20 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
                 }
 
                 if (in_array($type['name'], [
-                        'integer',
-                        'decimal',
-                        'float',
-                        'double',
-                        'money',
-                    ]) && blank($guessedRelationshipName)) {
+                    'integer',
+                    'decimal',
+                    'float',
+                    'double',
+                    'money',
+                ]) && blank($guessedRelationshipName)) {
                     $componentData[(in_array($componentName, [
-                            'cost',
-                            'money',
-                            'price',
-                        ]) || str($componentName)->endsWith([
-                            '_cost',
-                            '_price',
-                        ]) || $type['name'] === 'money') ? 'money' : 'numeric'] = [];
+                        'cost',
+                        'money',
+                        'price',
+                    ]) || str($componentName)->endsWith([
+                        '_cost',
+                        '_price',
+                    ]) || $type['name'] === 'money') ? 'money' : 'numeric'] = [];
                 }
             }
 
@@ -151,7 +151,7 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
                 $componentData['visible'] = [
                     new Literal(
                         'fn ('.class_basename($model).' $record): bool => $record->trashed()'
-                    )
+                    ),
                 ];
                 $this->namespace->addUse($model);
             } elseif ($column['nullable']) {
@@ -164,7 +164,7 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
                 $componentData['columnSpanFull'] = [];
             }
 
-            //metodo para adicionar as labels dos campos traduzidas
+            // metodo para adicionar as labels dos campos traduzidas
             $componentData['label'] = $this->transformerVariableNameInText($componentName);
 
             $this->importUnlessPartial($componentData['type']);
@@ -174,7 +174,7 @@ class CustomResourceInfolistSchemaClassGenerator extends ResourceInfolistSchemaC
 
         return array_map(
             function (array $componentData, string $componentName): string {
-                $component = (string)new Literal(
+                $component = (string) new Literal(
                     "{$this->simplifyFqn($componentData['type'])}::make(?)",
                     [$componentName]
                 );

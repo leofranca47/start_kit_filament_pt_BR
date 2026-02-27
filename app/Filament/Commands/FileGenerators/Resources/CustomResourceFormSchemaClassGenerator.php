@@ -83,7 +83,7 @@ class CustomResourceFormSchemaClassGenerator extends ResourceFormSchemaClassGene
 
                     $this->namespace->addUse($enumClass);
 
-                    $componentData['options'] = [new Literal(class_basename($enumClass) . '::class')];
+                    $componentData['options'] = [new Literal(class_basename($enumClass).'::class')];
                 } else {
                     $componentData['options'] = [array_combine(
                         $type['values'],
@@ -171,13 +171,13 @@ class CustomResourceFormSchemaClassGenerator extends ResourceFormSchemaClassGene
                 }
 
                 if (in_array($componentName, [
-                        'cost',
-                        'money',
-                        'price',
-                    ]) || str($componentName)->endsWith([
-                        '_cost',
-                        '_price',
-                    ]) || $type['name'] === 'money') {
+                    'cost',
+                    'money',
+                    'price',
+                ]) || str($componentName)->endsWith([
+                    '_cost',
+                    '_price',
+                ]) || $type['name'] === 'money') {
                     $componentData['prefix'] = ['$'];
                 }
             } elseif (in_array($componentData['type'], [
@@ -197,7 +197,7 @@ class CustomResourceFormSchemaClassGenerator extends ResourceFormSchemaClassGene
                 $componentData['columnSpanFull'] = [];
             }
 
-            //metodo para adicionar as labels dos campos traduzidas
+            // metodo para adicionar as labels dos campos traduzidas
             $componentData['label'] = $this->transformerVariableNameInText($componentName);
 
             $this->importUnlessPartial($componentData['type']);
@@ -212,7 +212,7 @@ class CustomResourceFormSchemaClassGenerator extends ResourceFormSchemaClassGene
                 unset($componentData['type']);
 
                 foreach ($componentData as $methodName => $parameters) {
-                    $component .= new Literal(PHP_EOL . "            ->{$methodName}(...?:)", [$parameters]);
+                    $component .= new Literal(PHP_EOL."            ->{$methodName}(...?:)", [$parameters]);
                 }
 
                 return "{$component},";

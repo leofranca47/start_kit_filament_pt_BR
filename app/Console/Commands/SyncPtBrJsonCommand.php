@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Facades\Prism;
 
-class SyncPtBrJson extends Command
+class SyncPtBrJsonCommand extends Command
 {
     protected $signature = 'translate
         {--paths=app,resources/views : Pastas relativas ao base_path separadas por vírgula}
@@ -82,8 +82,8 @@ class SyncPtBrJson extends Command
             if (! array_key_exists($key, $existing)) {
 
                 $response = Prism::text()
-                    ->using(Provider::Anthropic, 'claude-haiku-4-5-20251001')
-                    ->withPrompt('Informe a tradução direta do texto "'.$key.'" em português do Brasil. Apenas a tradução direta, sem explicações, pois vou adicionar esse texto diretamente em uma label na minha aplicação.')
+                    ->using(Provider::Ollama, 'translateModel')
+                    ->withPrompt($key)
                     ->asText();
 
                 $toAdd[$key] = $response->text;

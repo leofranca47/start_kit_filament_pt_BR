@@ -20,7 +20,7 @@ trait FormatVariableToTextTrait
                 <<<PHP
                 __('$label')
             PHP
-            )
+            ),
         ];
     }
 }

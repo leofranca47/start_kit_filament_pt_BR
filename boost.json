@@ -1,0 +1,20 @@
+{
+    "agents": [
+        "junie",
+        "claude_code",
+        "codex"
+    ],
+    "guidelines": true,
+    "herd_mcp": false,
+    "mcp": true,
+    "nightwatch_mcp": false,
+    "packages": [
+        "filament/filament",
+        "prism-php/prism"
+    ],
+    "sail": true,
+    "skills": [
+        "pest-testing",
+        "developing-with-prism"
+    ]
+}
